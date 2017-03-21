@@ -3,6 +3,14 @@ package context
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"runtime"
+	"runtime/pprof"
+	"strings"
+	"sync"
+	"time"
+
 	"github.com/smira/aptly/aptly"
 	"github.com/smira/aptly/console"
 	"github.com/smira/aptly/database"
@@ -14,13 +22,6 @@ import (
 	"github.com/smira/aptly/utils"
 	"github.com/smira/commander"
 	"github.com/smira/flag"
-	"os"
-	"path/filepath"
-	"runtime"
-	"runtime/pprof"
-	"strings"
-	"sync"
-	"time"
 )
 
 // AptlyContext is a common context shared by all commands
@@ -147,6 +148,9 @@ func (context *AptlyContext) DependencyOptions() int {
 		}
 		if context.lookupOption(context.config().DepFollowSource, "dep-follow-source") {
 			context.dependencyOptions |= deb.DepFollowSource
+		}
+		if context.lookupOption(context.config().DepVerboseResolve, "dep-verbose-resolve") {
+			context.dependencyOptions |= deb.DepVerboseResolve
 		}
 	}
 
