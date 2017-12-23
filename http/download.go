@@ -155,7 +155,6 @@ func (downloader *downloaderImpl) newRequest(ctx context.Context, method, url st
 	if err != nil {
 		return nil, errors.Wrap(err, url)
 	}
-	req.Close = true
 	req = req.WithContext(ctx)
 
 	proxyURL, _ := downloader.client.Transport.(*http.Transport).Proxy(req)
